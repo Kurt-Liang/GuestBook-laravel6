@@ -48,32 +48,45 @@ class ArticleController extends Controller
         $https = substr($video_url, 0, 8);
         $end =  substr($video_url, -4);
 
-        if ($http == "http://" or $https == "https://" and $end == ".mp4") {
-            error_reporting(0);
-            $html = file_get_contents($video_url);
-            error_reporting(-1);
-
-            if (empty($html)) {
+        if (!empty($video_url)) {
+            if ($http == "http://" or $https == "https://" and $end == ".mp4") {
+                error_reporting(0);
+                $html = file_get_contents($video_url);
+                error_reporting(-1);
+    
+                if (empty($html)) {
+                    $err = "Please enter the correct URL";
+                    return view('articles.create', ['err' => $err]);
+    
+                } else {
+                    $user = Auth::user();
+                    $article = new Article;
+                    $article->user = $user->name;
+                    $article->title = $request->input('title');
+                    $article->article = $request->input('article');
+                    $article->video_url = $request->input('video_url');
+                    $article->views = 0;
+                    $article->user_id = $user->id;
+                    $article->save();
+                    return redirect(route('articles.index'));
+                }
+    
+            } else {
                 $err = "Please enter the correct URL";
                 return view('articles.create', ['err' => $err]);
-
-            } else {
-                $user = Auth::user();
-                $article = new Article;
-                $article->user = $user->name;
-                $article->title = $request->input('title');
-                $article->article = $request->input('article');
-                $article->video_url = $request->input('video_url');
-                $article->views = 0;
-                $article->user_id = $user->id;
-                $article->save();
-                return redirect(route('articles.index'));
             }
-
         } else {
-            $err = "Please enter the correct URL";
-            return view('articles.create', ['err' => $err]);
-        }
+            $user = Auth::user();
+            $article = new Article;
+            $article->user = $user->name;
+            $article->title = $request->input('title');
+            $article->article = $request->input('article');
+            $article->video_url = '';
+            $article->views = 0;
+            $article->user_id = $user->id;
+            $article->save();
+            return redirect(route('articles.index'));
+        } 
     }
 
     /**
