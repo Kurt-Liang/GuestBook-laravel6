@@ -2,6 +2,7 @@
 date_default_timezone_set("Asia/Taipei");
 use App\Article;
 use App\Comment;
+use App\Stamp;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +26,3 @@ Route::resource('articles', 'ArticleController');
 
 Route::resource('comments', 'CommentController');
 
-Route::get('/test', function(){
-    $article = Comment::all();
-    return $article;
-});
