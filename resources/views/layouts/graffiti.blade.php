@@ -139,10 +139,6 @@ Released   : 20111223
 <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
 <script src="js/videojs-dash.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
-<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
-
-
 
 @if (!empty($article->video_url))
 <script>
