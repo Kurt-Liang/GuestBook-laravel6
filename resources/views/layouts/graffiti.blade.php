@@ -132,6 +132,32 @@ Released   : 20111223
 <!-- end #footer -->
 </body>
 </html>
+
+<link href="/css/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
+
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+<script src="src/js/videojs-dash.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
+<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+
+<script>
+    var player = videojs('example-video',{
+        sources:[{ src: "http://52.76.68.99/live/myStream/manifest.mpd"}],
+        muted:true,
+        width:"540",
+        height:"303",
+        controls:true
+    });
+    setTimeout(function(){
+        if (player["hasStarted_"] == false) {
+            player.error({message: "OFFLINE"});
+        }
+    }, 2000);
+    player.play();
+</script>
+
 @if (!empty($article->video_url))
 <script>
     const player = videojs('my-video',{
