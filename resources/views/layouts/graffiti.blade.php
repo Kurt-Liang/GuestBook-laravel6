@@ -137,10 +137,34 @@ Released   : 20111223
 <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
 
 <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
-<script src="src/js/videojs-dash.min.js"></script>
+<script src="js/videojs-dash.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
 <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+
+
+
+@if (!empty($article->video_url))
+<script>
+    const player = videojs('my-video',{
+        sources:[{ src: "{{ $article->video_url }}"}],
+		autoplay:true,
+        loop:true,
+        muted:false,
+        width:"540",
+        height:"303",
+        controls:true
+    });
+
+	function stamp(time){
+		player.currentTime(time);
+	}
+
+	function stamp_url(){
+		window.location.href = "/stamps/{{ $article->id }}/edit";
+	}
+</script>
+@endif
 
 <script>
     var player = videojs('example-video',{
@@ -157,26 +181,3 @@ Released   : 20111223
     }, 2000);
     player.play();
 </script>
-
-@if (!empty($article->video_url))
-<script>
-    const player = videojs('my-video',{
-        sources:[{ src: "{{ $article->video_url }}"}],
-		autoplay:true,
-        loop:true,
-        muted:true,
-        width:"540",
-        height:"303",
-        controls:true
-    });
-
-	function stamp(time){
-		player.currentTime(time);
-	}
-
-	function stamp_url(){
-		window.location.href = "/stamps/{{ $article->id }}/edit";
-	}
-</script>
-@endif
-
