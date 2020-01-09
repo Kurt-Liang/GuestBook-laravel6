@@ -194,6 +194,3 @@ Ex : `return view('tables.index', ['tables' => Table::all()]);`
 6. 開啟瀏覽器測試是否成功
 
 - - -
-## 2020/01/08 更新
-在 index 的部份增加 LIVE 功能
-- 使用 Wowza 後台和 GoCoder APP 直播軟體
