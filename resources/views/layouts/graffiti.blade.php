@@ -25,6 +25,7 @@ Released   : 20111223
 <link href="http://fonts.googleapis.com/css?family=Ruthie" rel="stylesheet" type="text/css" />
 <link href="//vjs.zencdn.net/7.3.0/video-js.min.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/7.3.0/video.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
     .vertical-menu {
 		width:600px;

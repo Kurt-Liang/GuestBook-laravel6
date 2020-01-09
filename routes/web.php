@@ -26,6 +26,3 @@ Route::resource('articles', 'ArticleController');
 
 Route::resource('comments', 'CommentController');
 
-Route::get('/live', function () {
-    return view('live');
-});
