@@ -15,7 +15,7 @@ use App\Stamp;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('index', ['comments' => Comment::where('article_id', '=', 0)->get()]);
 });
 
 Auth::routes();
@@ -26,3 +26,4 @@ Route::resource('articles', 'ArticleController');
 
 Route::resource('comments', 'CommentController');
 
+Route::post('ajaxRequest', 'AjaxController@ajaxRequestPost')->name('ajaxRequest.post');

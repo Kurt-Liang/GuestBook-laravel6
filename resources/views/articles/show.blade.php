@@ -53,20 +53,20 @@
                             </p>
                         </div>
                     @endforeach
+                    <div id="result"></div>
 
                     @if (!empty(Auth::user()))
                         <HR style='border:1 dashed' width='100%' SIZE=1>
-                        <form class='form' action="{{ route('comments.store') }}?id={{ $article->id }}", method='post'>
+                        <form id="comment">
                              @csrf
                             <div>
-                                <textarea name='comment' cols='70', rows='10'></textarea>
+                                <textarea id='text' cols='70', rows='10'></textarea>
                             </div>
-                            <div class='entry'>
-                                <p class='links'><input type='submit' name='submit' value='Comment'></p>
+                            <div class="form-group links">
+                                <div id="error"></div><button class="btn btn-success btn-submit">Comment</button>
                             </div>
                         </form>
                     @endif
-
                 </p>
             </div>
         </div>

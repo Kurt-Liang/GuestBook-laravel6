@@ -93,6 +93,9 @@ class CommentController extends Controller
     {
         $id = $comment->article_id;
         $comment->delete();
+        if ($id == 0) {
+            return redirect("/");
+        }
         return redirect("articles/$id");
     }
 }

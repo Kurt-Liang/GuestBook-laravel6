@@ -20,6 +20,7 @@ Released   : 20111223
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <title>GuestBook</title>
 <link href="{{ asset('style.css') }}" rel="stylesheet" type="text/css" media="screen" />
 <link href="http://fonts.googleapis.com/css?family=Ruthie" rel="stylesheet" type="text/css" />
@@ -158,7 +159,7 @@ Released   : 20111223
 	}
 
 	function stamp_url(){
-		window.location.href = "/stamps/{{ $article->id }}/edit";
+		window.location.href = "/stamps/{{ $article ?? ''->id }}/edit";
 	}
 </script>
 @endif
@@ -178,3 +179,99 @@ Released   : 20111223
     }, 2000);
     player.play();
 </script>
+
+@if (!empty($article))
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $(".btn-submit").click(function(e){
+    
+        e.preventDefault();
+    
+        var text = $("#text").val();
+		var id = {{ $article->id }};
+		
+    
+        $.ajax({
+            type:'POST',
+            url:"{{ route('ajaxRequest.post') }}",
+            data:{text:text, id:id},
+		    success:function(data){
+				if (data.text) {
+					$("#comment")[0].reset();
+					$("#error").html('');
+              		$("#result").append(
+						'<HR style="border:1 dashed" width="100%" SIZE=1>'+
+					  	'<p class="meta">'+
+							'<span class="date">' + data.time + '</span>'+
+							'<span class="posted">Commented by <a>' + data.user + '</a></span>'+
+						'</p>'+
+						'<div class="entry">'+
+							'<p>' + data.text + '</p>'+
+							'<p class="links">'+
+								'<div align="right">'+
+								'</div>'+
+							'</p>'+
+						'</div>');
+				} else {
+                    $("#comment")[0].reset();
+                    $("#error").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                }
+		    }
+        });
+    
+    });
+    
+	</script>
+@endif
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $(".index-submit").click(function(e){
+    
+        e.preventDefault();
+    
+        var text = $("#text").val();
+		var id = 0;
+		
+    
+        $.ajax({
+            type:'POST',
+            url:"{{ route('ajaxRequest.post') }}",
+            data:{text:text, id:id},
+		    success:function(data){
+				if (data.text) {
+					$("#comment")[0].reset();
+					$("#error").html('');
+              		$("#result").append(
+						'<HR style="border:1 dashed" width="100%" SIZE=1>'+
+					  	'<p class="meta">'+
+							'<span class="date">' + data.time + '</span>'+
+							'<span class="posted">Commented by <a>' + data.user + '</a></span>'+
+						'</p>'+
+						'<div class="entry">'+
+							'<p>' + data.text + '</p>'+
+							'<p class="links">'+
+								'<div align="right">'+
+								'</div>'+
+							'</p>'+
+						'</div>');
+				} else {
+                    $("#comment")[0].reset();
+                    $("#error").html('<font color="#ff0000">' + data.errorMsg + '</font>');
+                }
+		    }
+        });
+    
+    });
+    
+	</script>
